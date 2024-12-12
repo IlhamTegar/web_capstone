@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Afiliasi - Barber Shop App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_afi.css') }}">
+</head>
+
+<body>
+    <!-- Navbar dengan Logo dan Menu Navigasi -->
+    <nav class="navbar">
+        <!-- Logo -->
+        <div class="logo">
+            <img src="{{ url_for('static', filename='img/logo1.png') }}" alt="Logo" width="40">
+        </div>
+
+        <!-- Menu utama -->
+        <ul class="nav-links">
+            <li><a href="{{ url_for('pg.home') }}">Home</a></li>
+            <li><a href="{{ url_for('pg.afiliasi') }}">Afiliasi</a></li>
+        </ul>
+
+        <!-- Menu hamburger -->
+        <div class="hamburger-menu" id="hamburger-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+
+        <!-- Dropdown menu -->
+        <ul class="dropdown-menu" id="dropdown-menu">
+            {% if session.get('user_id') %}
+            <li><a href="{{ url_for('user.profile', user_id=session['user_id']) }}">Profile</a></li>
+            <li><a href="{{ url_for('user.logout') }}">Logout</a></li>
+            {% else %}
+            <li><a href="{{ url_for('user.login') }}">Login</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <div class="side-decoration left"></div>
+
+    <main class="affiliates-section">
+        <h2>Daftar Barber Shop yang Mengunduh Aplikasi</h2>
+        <div class="affiliate-list">
+            {% if users %}
+            {% for user in users %}
+            <div class="affiliate-item" onclick="toggleDetails(this)">
+                <div class="affiliate-info">
+                    <strong>{{ user.username }}</strong><br>
+                    Alamat: {{ user.alamat }}<br>
+                    Jam Kerja:
+                    {% if user.waktu_buka and user.waktu_tutup %}
+                    {{ user.waktu_buka }} - {{ user.waktu_tutup }}
+                    {% else %}
+                    Tidak tersedia
+                    {% endif %}
+                </div>
+                <div class="affiliate-details">
+                    Harga:
+                    {% if user.rentang_harga_murah and user.rentang_harga_mahal %}
+                    {{ user.rentang_harga_murah }} - {{ user.rentang_harga_mahal }}
+                    {% else %}
+                    Tidak tersedia
+                    {% endif %}<br>
+                    Kontak: {{ user.kontak_nomor or "Tidak tersedia" }}
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p>Belum ada barber shop yang terdaftar.</p>
+            {% endif %}
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/script_afi.js') }}"></script>
+
+    <div class="side-decoration right"></div>
+
+    <footer>
+        <p>&copy; 2024 Barber Shop App. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

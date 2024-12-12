@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_pf.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="profile-container">
+        <a href="#" class="back-button" onclick="goBack()">Kembali</a>
+        <h2>Edit Profile</h2>
+
+        <div class="side-decoration left"></div>
+        
+        <form method="POST" action="{{ url_for('user.profile', user_id=user_id) }}">
+            <div class="form-group">
+                <label for="username">Nama Toko</label>
+                <input type="text" name="username" id="username" value="{{ user.username }}" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password (Biarkan kosong jika tidak ingin diubah)</label>
+                <input type="password" name="password" id="password">
+            </div>
+
+            <div class="form-group">
+                <label for="alamat">Alamat</label>
+                <input type="text" name="alamat" id="alamat" value="{{ user.alamat }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="waktu_buka">Waktu Buka</label>
+                <input type="time" name="waktu_buka" id="waktu_buka" value="{{ user.waktu_buka }}">
+            </div>
+
+            <div class="form-group">
+                <label for="waktu_tutup">Waktu Tutup</label>
+                <input type="time" name="waktu_tutup" id="waktu_tutup" value="{{ user.waktu_tutup }}">
+            </div>
+
+            <div class="form-group">
+                <label for="rentang_harga_murah">Rentang Harga (Murah)</label>
+                <input type="number" name="rentang_harga_murah" id="rentang_harga_murah" value="{{ user.rentang_harga_murah }}" min="0" required>
+            </div>
+
+            <div class="form-group">
+                <label for="rentang_harga_mahal">Rentang Harga (Mahal)</label>
+                <input type="number" name="rentang_harga_mahal" id="rentang_harga_mahal" value="{{ user.rentang_harga_mahal }}" min="0" required>
+            </div>
+
+            <div class="form-group">
+                <label for="kontak_nomor">Kontak Nomor</label>
+                <input type="tel" name="kontak_nomor" id="kontak_nomor" value="{{ user.kontak_nomor }}" pattern="[0-9]{8,15}" required>
+            </div>
+
+            <button type="submit" class="save-button">Simpan Perubahan</button>
+        </form>
+
+        <div class="side-decoration right"></div>
+
+        <!-- Tombol untuk Hapus Akun -->
+        <button class="delete-button" onclick="openModal()">Hapus Akun</button>
+    </div>
+
+    <!-- Modal Konfirmasi -->
+    <div id="deleteModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <h3>Konfirmasi Hapus Akun</h3>
+            <p>Apakah Anda yakin ingin menghapus akun Anda? Tindakan ini tidak dapat dibatalkan.</p>
+            <form method="POST" action="{{ url_for('user.delete_account', user_id=user_id) }}">
+                <button type="submit" class="confirm-delete-button">Hapus Akun</button>
+                <button type="button" class="cancel-button" onclick="closeModal()">Batal</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+
+        function openModal() {
+            document.getElementById('deleteModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('deleteModal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
