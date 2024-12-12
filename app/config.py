@@ -2,9 +2,8 @@ import os
 
 class Config:
     SECRET_KEY = os.getenv('SECRET_KEY', 'C6CPHairstyleRec2024')  
-    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URI', 'mysql://C6CP:S.Tr.Kom2024@194.31.53.102/C6CP')
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URI', 'mysql://root:@localhost/tukang_cukur')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-#  'mysql://root:@localhost/tukang_cukur'
     MAIL_SERVER = "smtp.gmail.com"
     MAIL_PORT = 587
     MAIL_USE_TLS = True            # Gunakan TLS (True untuk 587)
